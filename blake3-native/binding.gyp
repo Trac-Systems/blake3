@@ -14,10 +14,10 @@
       ],
       "sources": [
         "src/native.cc",
-        "c/blake3.c",
-        "c/blake3_dispatch.c",
-        "c/blake3_portable.c",
-        "<!@(node -p \"require('fs').readdirSync('c').filter(f=>f.endsWith(process.platform==='win32'?'_msvc.asm':'_unix.S')).map(f=>'c/'+f).join(' ')\")",
+        "../blake3-src/c/blake3.c",
+        "../blake3-src/c/blake3_dispatch.c",
+        "../blake3-src/c/blake3_portable.c",
+        "<!@(node -p \"require('fs').readdirSync('../blake3-src/c').filter(f=>f.endsWith(process.platform==='win32'?'_msvc.asm':'_unix.S')).map(f=>'c/'+f).join(' ')\")",
       ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",

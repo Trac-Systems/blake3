@@ -23,8 +23,5 @@
   },
   "homepage": "https://github.com/connor4312/blake3#readme",
   "author": "Connor Peet <connor@peet.io>",
-  "license": "MIT",
-  "dependencies": {
-    "@c4312/blake3-internal": "2.1.7"
-  }
+  "license": "MIT"
 }

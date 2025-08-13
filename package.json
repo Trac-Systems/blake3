@@ -7,7 +7,6 @@
     "blake3-wasm"
   ],
   "scripts": {
-    "preinstall": "cp -R ",
     "pack-all": "make clean && make all && make test && make pack",
     "test": "make test",
     "fmt": "make fmt",
