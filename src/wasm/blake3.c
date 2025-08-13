@@ -8,7 +8,7 @@ void EMSCRIPTEN_KEEPALIVE hash(const void *input, size_t input_len,
   blake3_hasher h;
   blake3_hasher_init(&h);
   blake3_hasher_update(&h, input, input_len);
-  blake3_hasher_finalize_seek(&h, 0, out, out_len);
+  blake3_hasher_finalize(&h, out, out_len);
 }
 
 blake3_hasher *EMSCRIPTEN_KEEPALIVE clone_hasher(blake3_hasher *h) {

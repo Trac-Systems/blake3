@@ -6,12 +6,12 @@
     "fmt": "make fmt",
     "compile": "make all"
   },
+  "main": "dist/wasm/blake3.js",
+  "browser": "dist/wasm/blake3.js",
+  "module": "dist/wasm/blake3.mjs",
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
     "trailingComma": "all"
-  },
-  "dependencies": {
-    "viem": "^2.33.3"
   }
 }

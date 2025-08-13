@@ -1,5 +1,5 @@
-const createBlake3 = require('./dist/wasm/blake3.js');
-const viem = require('viem');
+import createBlake3 from './dist/wasm/blake3.js';
+import * as viem from 'viem';
 
 (async () => {
   const input = "abc"
