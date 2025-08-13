@@ -29,7 +29,7 @@ test: $(ALL_OUT)
 	cd blake3 && node ../node_modules/.bin/mocha "*.test.cjs" --timeout 5000 $(TEST_ARGS)
 
 clean:
-	rm -rf ./*/build ./*/dist ./*/esm
+	rm -rf ./build ./dist ./esm
 
 fmt:
 	node ./node_modules/.bin/remark readme.md -f -o readme.md

@@ -10,5 +10,8 @@
     "printWidth": 100,
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "dependencies": {
+    "viem": "^2.33.3"
   }
 }
