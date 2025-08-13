@@ -1,5 +1,0 @@
-{
-  "plugins": {
-    "remark-toc": { "tight": true }
-  }
-}
