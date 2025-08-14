@@ -1,11 +1,9 @@
 {
-  "name": "trac-blae3",
+  "name": "trac-blake3",
   "version": "0.0.1",
   "scripts": {
-    "pack-all": "make clean && make all && make test && make pack",
-    "test": "make test",
-    "fmt": "make fmt",
-    "compile": "make all"
+    "build": "make",
+    "clean": "make clean"
   },
   "main": "dist/wasm/blake3.js",
   "browser": "dist/wasm/blake3.js",
