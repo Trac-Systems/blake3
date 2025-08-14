@@ -14,7 +14,11 @@ define wasm-compile-cjs =
 emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall \
 	-Iblake3-src/c -sMODULARIZE -s 'EXPORT_NAME="createMyModule"' \
-	-sASSERTIONS=0 --profiling \
+	-sASSERTIONS=0 \
+	-sALLOW_MEMORY_GROWTH=0 \
+	-flto \
+  -Os \
+	-DNDEBUG \
 	-DIS_WASM -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_AVX2 \
 	-sSINGLE_FILE=1
 endef
@@ -23,7 +27,11 @@ define wasm-compile-esm =
 emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall \
 	-Iblake3-src/c -sMODULARIZE -s 'EXPORT_NAME="createMyModule"' \
-	-sASSERTIONS=0 --profiling \
+	-sASSERTIONS=0 \
+	-sALLOW_MEMORY_GROWTH=0 \
+	-flto \
+  -Os \
+	-DNDEBUG \
 	-DIS_WASM -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_AVX2 \
 	-sSINGLE_FILE=1
 endef
