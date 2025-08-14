@@ -1,5 +1,7 @@
 const createBlake3 = require('./internal/blake3_wasm')
 
+const DEFAULT_LENGTH = 32
+
 let wasm
 
 const getWasm = async () => {
@@ -8,8 +10,7 @@ const getWasm = async () => {
   return wasm
 }
 
-module.exports.blake3 = async input => {
-  const hashLength = 32
+module.exports.blake3 = async (input, hashLength = DEFAULT_LENGTH) => {
   const wasm = await getWasm()
 
   const encoder = new TextEncoder()
