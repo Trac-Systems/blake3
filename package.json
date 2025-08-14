@@ -1,5 +1,6 @@
 {
-  "name": "blake3",
+  "name": "trac-blae3",
+  "version": "0.0.1",
   "scripts": {
     "pack-all": "make clean && make all && make test && make pack",
     "test": "make test",
@@ -9,6 +10,10 @@
   "main": "dist/wasm/blake3.js",
   "browser": "dist/wasm/blake3.js",
   "module": "dist/wasm/blake3.mjs",
+  "files": [
+    "dist/"
+  ],
+  "keywords": ["blake3", "wasm", "trac"],
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,

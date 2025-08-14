@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void EMSCRIPTEN_KEEPALIVE hash(const void *input, size_t input_len,
+void EMSCRIPTEN_KEEPALIVE hash(const uint8_t *input, size_t input_len,
                                        void *out, size_t out_len) {
   blake3_hasher h;
   blake3_hasher_init(&h);

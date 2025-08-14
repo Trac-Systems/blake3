@@ -3,6 +3,8 @@ import * as viem from 'viem';
 
 (async () => {
   const input = "abc"
+  const encoder = new TextEncoder()
+  const bytes = encoder.encode(input)
   const hashLength = 32
   const wasm = await createBlake3(); // No filesystem access, wasm is inside
 
@@ -12,7 +14,7 @@ import * as viem from 'viem';
     'hash',
     null,
     ['number', 'number', 'number', 'number'],
-    [input, input.length, hashAddr, hashLength],
+    [bytes, bytes.length, hashAddr, hashLength],
   );
 
   const res = wasm.HEAPU8.subarray(hashAddr, hashAddr + hashLength);
