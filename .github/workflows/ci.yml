@@ -27,7 +27,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: npm-package
-          path: ./dist
+          path: |
+            ./package.json
+            ./dist
           retention-days: 1
   release:
     needs: build-and-test
