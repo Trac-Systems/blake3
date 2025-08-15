@@ -3,7 +3,6 @@
   "version": "0.0.3",
   "scripts": {
     "build": "make",
-    "test": "echo 0",
     "clean": "make clean",
     "build:docker": "docker build -t blake3-build . && docker run --rm -v $(pwd):/build blake3-build bash -c 'npm install && npm run build'",
     "test": "mocha \"test/**/*.test.js\""
