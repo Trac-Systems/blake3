@@ -1,4 +1,4 @@
-const createBlake3 = require('./internal/blake3_wasm')
+const createBlake3 = require('./internal/blake3_wasm.js')
 
 const DEFAULT_LENGTH = 32
 let wasm
