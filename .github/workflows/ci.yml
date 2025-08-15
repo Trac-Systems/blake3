@@ -23,6 +23,9 @@ jobs:
         run: npm i
       - name: Build project
         run: npm run build
+      - name: List artifact files
+        run: |
+          ls -lh dist/wasm/internal/
       - name: Run tests
         run: npm run test
       - name: Upload npm package
