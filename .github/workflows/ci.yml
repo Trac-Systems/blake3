@@ -22,7 +22,7 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Run tests
-        run: npm run test
+        run: npx mocha "test/**/*.test.js"
       - name: Upload npm package
         uses: actions/upload-artifact@v4
         with:
