@@ -1,43 +1,43 @@
 const fs = require('fs');
 const path = require('path');
+const { expect } = require('chai');
 
 const artifactPath = path.resolve(__dirname, '../dist/wasm/blake3.js');
+
 if (!fs.existsSync(artifactPath)) {
-  throw new Error('BLAKE3 WASM artifact not found. Please run `npm run build` first.');
+  throw new Error(
+    'BLAKE3 WASM artifact not found. Please run `npm run build` before running tests.',
+  );
 }
 
-const { expect } = require('chai');
-const { blake3 } = require('../src/index');
+const { blake3 } = require('../dist/wasm/blake3');
 
 const toHex = (uint8Arr) =>
   Array.from(uint8Arr)
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
 
-describe('blake3 hashing', function () {
-  this.timeout(5000);
+const raw = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, './vectors/blake3_test_vectors.json'), 'utf8'),
+);
 
-  const input = 'BLAKE3';
-  const lengthsToTest = [16, 32, 48, 64];
+const testVectors = raw.cases.map((v) => ({
+  inputLen: v.input_len,
+  expected: v.hash,
+}));
 
-  lengthsToTest.forEach((len) => {
-    it(`should return a hash of length ${len} bytes`, async () => {
-      const hash = await blake3(input, len);
-      expect(hash).to.be.instanceOf(Uint8Array);
-      expect(hash.length).to.equal(len);
-      console.log(`Length ${len}: ${toHex(hash)}`);
+describe('BLAKE3 official test vectors', function () {
+  this.timeout(20000);
+
+  testVectors.forEach(({ inputLen, expected }, index) => {
+    it(`vector #${index} (input_len=${inputLen}) should match official hash`, async () => {
+      const input = new Uint8Array(inputLen);
+      for (let i = 0; i < inputLen; i++) {
+        input[i] = i % 251;
+      }
+
+      const hash = await blake3(input, expected.length / 2);
+      expect(toHex(hash)).to.equal(expected);
     });
-  });
-
-  it('should produce the same output for the same input and length', async () => {
-    const hash1 = await blake3(input, 32);
-    const hash2 = await blake3(input, 32);
-    expect(toHex(hash1)).to.equal(toHex(hash2));
-  });
-
-  it('should produce different outputs for different lengths', async () => {
-    const hash32 = await blake3(input, 32);
-    const hash64 = await blake3(input, 64);
-    expect(toHex(hash32)).to.not.equal(toHex(hash64));
   });
 });
