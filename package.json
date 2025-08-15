@@ -11,7 +11,11 @@
   "files": [
     "dist/"
   ],
-  "keywords": ["blake3", "wasm", "trac"],
+  "keywords": [
+    "blake3",
+    "wasm",
+    "trac"
+  ],
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
