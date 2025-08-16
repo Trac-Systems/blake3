@@ -1,6 +1,6 @@
 {
-  "name": "trac-blake3",
-  "version": "0.0.2",
+  "name": "@tracsystems/blake3",
+  "version": "0.0.3",
   "scripts": {
     "build": "make",
     "test": "echo 0",
