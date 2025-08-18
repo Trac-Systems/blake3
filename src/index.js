@@ -1,4 +1,4 @@
-const createBlake3 = require('./internal/blake3_wasm.js')
+const createBlake3 = require('./internal/blake3_wasm')
 
 const DEFAULT_LENGTH = 32
 let wasm
@@ -11,7 +11,6 @@ const getWasm = async () => {
 
 module.exports.blake3 = async (bytes, hashLength = DEFAULT_LENGTH) => {
   const wasm = await getWasm()
-  console.log('wasm initialized:', !!wasm, 'HEAPU8:', !!wasm.HEAPU8);
   const inputAddr = wasm._malloc(bytes.length)
   wasm.HEAPU8.set(bytes, inputAddr)
   const outputAddr = wasm._malloc(hashLength)
