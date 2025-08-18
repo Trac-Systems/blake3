@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { expect } = require('chai');
+
+let expect; // chai's expect will be loaded dynamically
 
 const artifactPath = path.resolve(__dirname, '../dist/wasm/blake3.js');
 
@@ -28,6 +29,11 @@ const testVectors = raw.cases.map((v) => ({
 
 describe('BLAKE3 official test vectors', function () {
   this.timeout(20000);
+
+  // Load chai here, since it's ESM-only
+  before(async () => {
+    ({ expect } = await import('chai'));
+  });
 
   testVectors.forEach(({ inputLen, expected }, index) => {
     it(`vector #${index} (input_len=${inputLen}) should match official hash`, async () => {
