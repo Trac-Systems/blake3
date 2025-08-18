@@ -1,6 +1,3 @@
-TARGETS=nodejs browser web
-MODE=dev
-
 BLAKE3_SRC = blake3-src/c/blake3.c blake3-src/c/blake3_dispatch.c blake3-src/c/blake3_portable.c blake3-src/c/blake3_sse41.c
 
 EM_WASM_SRC = src/wasm/blake3.c $(BLAKE3_SRC)

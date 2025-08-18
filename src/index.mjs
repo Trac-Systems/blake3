@@ -1,4 +1,4 @@
-import wasm from './internal/blake3_wasm.mjs'
+import createBlake3 from './internal/blake3_wasm'
 
 const DEFAULT_LENGTH = 32
 let wasm
