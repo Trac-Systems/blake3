@@ -23,9 +23,14 @@ jobs:
         run: npm i
       - name: Build project
         run: npm run build
-      - name: List artifact files
-        run: |
-          ls -lh dist/wasm/internal/
+      - name: Upload npm package
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: |
+            ./package.json
+            ./dist
+          retention-days: 1  
   test:
     needs: build
     runs-on: ubuntu-latest
