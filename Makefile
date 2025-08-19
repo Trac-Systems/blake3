@@ -14,7 +14,7 @@ emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sASSERTIONS=0 \
 	-sALLOW_MEMORY_GROWTH=0 \
 	-flto \
-	-sENVIRONMENT=worker,node \
+	-sENVIRONMENT=shell,node \
   -Os \
 	-DNDEBUG \
 	-DIS_WASM -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_AVX2 \
@@ -28,7 +28,7 @@ emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sASSERTIONS=0 \
 	-sALLOW_MEMORY_GROWTH=0 \
 	-flto \
-	-sENVIRONMENT=worker,node \
+	-sENVIRONMENT=shell,node \
   -Os \
 	-DNDEBUG \
 	-DIS_WASM -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_AVX2 \
