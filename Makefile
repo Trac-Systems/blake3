@@ -10,7 +10,7 @@ WASM_OUT_ESM = dist/wasm/internal/blake3_wasm.mjs
 define wasm-compile-cjs =
 emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall \
-	-Iblake3-src/c -sMODULARIZE -s 'EXPORT_NAME="createBlake3"' \
+	-Iblake3-src/c -sMODULARIZE=1 -s 'EXPORT_NAME="createBlake3"' \
 	-sASSERTIONS=0 \
 	-sALLOW_MEMORY_GROWTH=0 \
 	-flto \
@@ -24,7 +24,7 @@ endef
 define wasm-compile-esm =
 emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall \
-	-Iblake3-src/c -sMODULARIZE -s 'EXPORT_NAME="createBlake3"' \
+	-Iblake3-src/c -sMODULARIZE=1 -s 'EXPORT_NAME="createBlake3"' \
 	-sASSERTIONS=0 \
 	-sALLOW_MEMORY_GROWTH=0 \
 	-flto \

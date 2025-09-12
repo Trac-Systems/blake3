@@ -8,7 +8,7 @@
     "test": "mocha \"test/**/*.test.js\""
   },
   "main": "dist/wasm/blake3.js",
-  "browser": "dist/wasm/blake3.js",
+  "browser": "dist/wasm/blake3.mjs",
   "module": "dist/wasm/blake3.mjs",
   "files": [
     "dist/"
