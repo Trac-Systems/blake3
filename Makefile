@@ -39,7 +39,7 @@ endef
 define wasm-compile-portable =
 emcc -O3 $^ -o $@ \
 	-Iblake3-src/c \
-	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall \
+	-sEXPORTED_FUNCTIONS=_malloc,_free -sEXPORTED_RUNTIME_METHODS=ccall,HEAPU8 \
 	-s WASM=0 \
 	-s MODULARIZE=1 -s 'EXPORT_NAME="createBlake3"' \
 	-s SINGLE_FILE=1 \
