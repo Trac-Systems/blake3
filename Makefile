@@ -1,11 +1,12 @@
 BLAKE3_SRC = blake3-src/c/blake3.c blake3-src/c/blake3_dispatch.c blake3-src/c/blake3_portable.c blake3-src/c/blake3_sse41.c
+PORTABLE_BLAKE3_SRC = blake3-src/c/blake3.c blake3-src/c/blake3_dispatch.c blake3-src/c/blake3_portable.c
 
 EM_WASM_SRC = src/wasm/blake3.c $(BLAKE3_SRC)
-EM_WASM_OUT = dist/wasm/blake3.js dist/wasm/blake3.mjs
+EM_PORTABLE_SRC = src/wasm/blake3.c $(PORTABLE_BLAKE3_SRC)
 
-ALL_OUT = $(EM_WASM_OUT)
 WASM_OUT_CJS = dist/wasm/internal/blake3_wasm.js
 WASM_OUT_ESM = dist/wasm/internal/blake3_wasm.mjs
+WASM_OUT_PORTABLE = dist/wasm/internal/blake3_wasm_portable.js
 
 define wasm-compile-cjs =
 emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
@@ -35,7 +36,19 @@ emcc -O3 -msimd128 -msse4.1 $^ -o $@ \
 	-sSINGLE_FILE=1
 endef
 
-all: dist/wasm/blake3.js dist/wasm/blake3.mjs
+define wasm-compile-portable =
+emcc -O3 $^ -o $@ \
+	-Iblake3-src/c \
+	-s WASM=0 \
+	-s MINIMAL_RUNTIME=1 \
+	-s MODULARIZE=1 -s 'EXPORT_NAME="createBlake3"' \
+	-s SINGLE_FILE=1 \
+	-s STRICT=1 -s MALLOC=emmalloc \
+	-s ENVIRONMENT='worker' \
+	-DNDEBUG -DBLAKE3_NO_AVX512 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_SSE2 --no-entry
+endef
+
+all: dist/wasm/blake3.js dist/wasm/blake3.mjs dist/wasm/blake3_rn.js
 
 $(WASM_OUT_CJS): $(EM_WASM_SRC)
 	mkdir -p $(dir $@)
@@ -45,6 +58,10 @@ $(WASM_OUT_ESM): $(EM_WASM_SRC)
 	mkdir -p $(dir $@)
 	$(wasm-compile-esm)
 
+$(WASM_OUT_PORTABLE): $(EM_PORTABLE_SRC)
+	mkdir -p $(dir $@)
+	$(wasm-compile-portable)
+
 dist/wasm/blake3.js: $(WASM_OUT_CJS) src/index.js
 	mkdir -p $(dir $@)
 	cp src/index.js $@
@@ -52,6 +69,10 @@ dist/wasm/blake3.js: $(WASM_OUT_CJS) src/index.js
 dist/wasm/blake3.mjs: $(WASM_OUT_ESM) src/index.mjs
 	mkdir -p $(dir $@)
 	cp src/index.mjs $@
+
+dist/wasm/blake3_rn.js: $(WASM_OUT_PORTABLE) src/index.js
+	mkdir -p $(dir $@)
+	cp src/index.rn.js $@
 
 clean:
 	rm -rf ./build ./dist
