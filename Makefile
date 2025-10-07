@@ -44,7 +44,7 @@ emcc -O3 $^ -o $@ \
 	-s MINIMAL_RUNTIME=1 \
 	-s MODULARIZE=1 -s 'EXPORT_NAME="createBlake3"' \
 	-s SINGLE_FILE=1 \
-	-s STRICT=1 -s MALLOC=emmalloc \
+	-s STRICT=1 \
 	-s ENVIRONMENT='worker' \
 	-DNDEBUG -DBLAKE3_NO_AVX512 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_SSE2 --no-entry
 endef
