@@ -47,3 +47,44 @@ describe('BLAKE3 official test vectors', function () {
     });
   });
 });
+
+describe('BLAKE3 WASM memory safety / concurrency', function () {
+  this.timeout(20000);
+
+  before(async () => {
+    ({ expect } = await import('chai'));
+  });
+
+  it('should return a copy (hash buffers must not share the same ArrayBuffer)', async () => {
+    const a = new Uint8Array(1024);
+    const b = new Uint8Array(1024);
+    for (let i = 0; i < a.length; i++) a[i] = i % 251;
+    for (let i = 0; i < b.length; i++) b[i] = (i * 7) % 251;
+
+    const h1 = await blake3(a, 32);
+    const h2 = await blake3(b, 32);
+
+    expect(h1).to.be.instanceof(Uint8Array);
+    expect(h2).to.be.instanceof(Uint8Array);
+
+    expect(h1.buffer).to.not.equal(h2.buffer);
+  });
+
+  it('concurrent hashing should match sequential hashing', async () => {
+    const inputs = Array.from({ length: 50 }, (_, i) => {
+      const u8 = new Uint8Array(2048);
+      u8[0] = i;
+      for (let j = 1; j < u8.length; j++) u8[j] = (j + i) % 251;
+      return u8;
+    });
+
+    const sequential = [];
+    for (const inp of inputs) {
+      sequential.push(toHex(await blake3(inp, 32)));
+    }
+
+    const concurrent = await Promise.all(inputs.map(inp => blake3(inp, 32).then(toHex)));
+
+    expect(concurrent).to.deep.equal(sequential);
+  });
+});
