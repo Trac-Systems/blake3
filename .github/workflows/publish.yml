@@ -5,6 +5,9 @@ on:
       - "**"
     tags:
       - "v*"
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +21,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
       - name: Make version
         run: make -v
       - name: Install dependencies
@@ -49,7 +52,7 @@ jobs:
           path: .
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
       - run: npm i
       - run: npm run test
   release:
@@ -63,9 +66,7 @@ jobs:
           path: .
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org/'
       - run: npm pack
-      - run: npm publish *.tgz
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish *.tgz --access public
